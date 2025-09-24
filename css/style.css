@@ -1,0 +1,1588 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Importar la fuente de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+
+/* Aplicar la fuente a elementos específicos que podrían no heredarla */
+.header, .nav-menu, .nav-actions, .main-content, .footer,
+.form-section, /* AÑADIDO: Para asegurar que los formularios también usen la fuente */
+.form-group label, /* AÑADIDO: Para las etiquetas de los formularios */
+.form-group input, /* AÑADIDO: Para los campos de texto, email, password, etc. */
+.form-group select, /* AÑADIDO: Para el selector de asunto */
+.form-group textarea, /* AÑADIDO: Para el área de texto */
+.submit-btn, /* AÑADIDO: Para el botón de enviar/submit */
+.form-btn /* AÑADIDO: Para otros botones de formulario */ {
+    font-family: 'Electrolize', sans-serif;
+}
+
+body {
+    font-family: 'Electrolize', sans-serif;
+    line-height: 1.6;
+    color: #e0e0e0;
+    background-color: #0a001a;
+    background-image: radial-gradient(circle at 1px 1px, #1a0033 1px, transparent 0);
+    background-size: 15px 15px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Efecto de "scanlines" o "noise" global */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5000;
+    opacity: 0.05;
+    background-image:
+        linear-gradient(rgba(17, 0, 34, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17, 0, 34, 0.2) 1px, transparent 1px);
+    background-size: 2px 2px;
+    animation: scanlinesEffect 8s infinite linear;
+}
+
+@keyframes scanlinesEffect {
+    from { background-position: 0 0; }
+    to { background-position: 100% 100%; }
+}
+
+/* NUEVO: Efecto Matrix en el fondo (body::after) */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 4999; /* Por debajo de las scanlines, por encima del contenido principal */
+    background-image:
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), /* Líneas horizontales */
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px); /* Líneas verticales */
+    background-size: 20px 20px; /* Tamaño de la cuadrícula */
+    animation: matrixGridFlow 10s infinite linear;
+}
+
+@keyframes matrixGridFlow {
+    from { background-position: 0 0; }
+    to { background-position: 0 100%; } /* Anima el movimiento de la cuadrícula hacia abajo */
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Electrolize', sans-serif; /* SOLUCIÓN: Aplicar explícitamente la fuente */
+    color: #ff00ff;
+    text-shadow: 0 0 3px #ff00ff, 0 0 8px #ff00ff;
+    position: relative;
+    display: inline-block;
+}
+
+/* Animación de Glitch para títulos principales al pasar el ratón */
+h1:hover, h2:hover {
+    animation: textGlitch 0.8s infinite linear alternate;
+}
+
+/* SOLUCIÓN: Efecto Glitch constante para los títulos del slider */
+.slide-content h2 {
+    animation: textGlitch 0.8s infinite linear alternate;
+}
+
+@keyframes textGlitch {
+    0% {
+        text-shadow: 0 0 3px #ff00ff, 0 0 8px #ff00ff;
+        transform: translate(0);
+    }
+    20% {
+        text-shadow: 2px -2px 5px #00ffff, -2px 2px 10px #ff0066;
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        text-shadow: -3px 3px 6px #ff00ff, 3px -3px 12px #a020f0;
+        transform: translate(3px, -3px);
+    }
+    60% {
+        text-shadow: 1px 1px 4px #00ffff, -1px -1px 9px #ff00ff;
+        transform: translate(-1px, -1px);
+    }
+    80% {
+        text-shadow: -2px 1px 5px #ff0066, 2px -1px 10px #00ffff;
+        transform: translate(2px, 1px);
+    }
+    100% {
+        text-shadow: 0 0 3px #ff00ff, 0 0 8px #ff00ff;
+        transform: translate(0);
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Estilos para el enlace "Saltar al contenido principal" (Skip Link) */
+.skip-link {
+    position: absolute;
+    top: -40px; /* Inicialmente fuera de la pantalla */
+    left: 6px;
+    background: #00d4ff; /* Color de fondo del enlace (azul cian) */
+    color: #000000; /* Color del texto (negro) */
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 9999; /* Asegura que esté por encima de todo cuando sea visible */
+    transition: top 0.3s ease-in-out; /* Animación suave al aparecer/desaparecer */
+    /* Asegurarse de que no tenga bordes o outlines extraños por defecto del navegador */
+    border: none;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.7); /* Sombra para el enlace */
+}
+
+/* Cuando el enlace recibe foco (navegación con teclado), se desliza hacia abajo */
+.skip-link:focus {
+    top: 10px; /* Se desliza 10px desde la parte superior */
+}
+
+/* Estilos para el encabezado */
+.header-main.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin: 0 1rem;
+}
+
+.lightbox {
+    display: none; /* Esto oculta la caja de luz por defecto */
+    /* Otros estilos que pueda tener tu lightbox, como la posición, etc. */
+} 
+
+/* --- Estilos para el Logo de Imagen en el Header --- */
+.logo img {
+    height: 100px;
+    width: auto;
+    vertical-align: middle;
+    filter: drop-shadow(0 0 8px rgba(255, 0, 255, 0.7));
+    transition: filter 0.3s ease-in-out;
+}
+
+.logo img:hover {
+    filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.9));
+}
+
+.logo a {
+    color: #00ffff;
+    font-size: 2em;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 0 0 10px #00ffff;
+}
+
+/* Mobile Menu Toggle (Hamburguesa) */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #00ffff;
+    font-size: 1.8em;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* Nav Menu */
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    z-index: 1;
+    margin-right: auto;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-menu a {
+    color: #00ffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    z-index: 1;
+    position: relative; /* CRUCIAL: El padre del ::after debe ser relativo */
+    display: inline-block; /* CRUCIAL: Para que el 'width' del 'a' se ajuste a su contenido */
+    padding-bottom: 5px; /* Espacio para el subrayado */
+}
+
+/* SOLUCIÓN: Ajuste del pseudo-elemento para el subrayado */
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0; /* Empieza en 0 */
+    height: 2px;
+    bottom: 0;
+    left: 50%; /* Centra el inicio del subrayado */
+    background-color: #ff00ff;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out; /* Transición también para 'left' */
+    transform: translateX(-50%); /* Ajusta para centrar el 0% de width */
+}
+
+.nav-menu a:hover::after {
+    width: 100%; /* Se expande al 100% del ancho del texto */
+    left: 0; /* Vuelve a la izquierda para cubrir todo el ancho del texto */
+    transform: translateX(0); /* Quita la transformación para el 100% de width */
+    box-shadow: 0 0 5px #ff00ff;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.7);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Estilo para los botones de icono en el header */
+.nav-actions .btn-icon {
+    font-size: 1.8rem;
+    color: #ff00ff; /* Color rosa neón */
+    transition: color 0.3s ease, transform 0.3s ease;
+    margin-left: 1rem;
+    text-decoration: none; /* Asegura que no haya subrayado */
+}
+
+.nav-actions .btn-icon:hover {
+    color: #fff; /* Color blanco al pasar el ratón */
+    transform: scale(1.1); /* Efecto de crecimiento al pasar el ratón */
+}
+
+/* Header Actions (Search and Login) */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+/* Search Container */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Search Form - Inicialmente colapsado */
+.search-form {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: width 0.3s ease-out, opacity 0.3s ease-out, right 0.3s ease-out, padding 0.3s ease-out;
+    background: #0d0026;
+    border-radius: 25px;
+    padding: 0;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    z-index: 2;
+    white-space: nowrap;
+}
+
+/* Estado expandido del buscador (añadido por JS) */
+.search-container.active .search-form {
+    width: 250px;
+    opacity: 1;
+    pointer-events: auto;
+    padding: 0.5rem 1rem;
+    right: 40px;
+}
+
+/* Search Input */
+.search-input {
+    border: none;
+    background: transparent;
+    color: #e0e0e0;
+    padding: 0;
+    font-size: 1em;
+    flex-grow: 1;
+    outline: none;
+    min-width: 0;
+}
+
+/* Search Submit Button (interno del formulario) */
+.search-submit-btn {
+    background: none;
+    border: none;
+    color: #00ffff;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s ease;
+    flex-shrink: 0;
+}
+
+.search-submit-btn:hover {
+    color: #ff00ff;
+}
+
+.search-input:focus {
+    border-color: #ff00ff;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.3);
+}
+
+.search-input::placeholder {
+    color: #888;
+}
+
+.search-btn {
+    background: #a020f0;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(160, 32, 240, 0.5);
+    color: white;
+}
+
+.search-btn:hover {
+    background: #ff0066;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 0, 102, 0.7), 0 0 20px rgba(255, 0, 102, 0.4);
+}
+
+.login-btn {
+    background: #a020f0;
+    color: white;
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(160, 32, 240, 0.7);
+}
+
+.login-btn:hover {
+    background: #ff0066;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 0, 102, 0.9), 0 0 25px rgba(255, 0, 102, 0.5);
+}
+
+/* Search Toggle (Lupa) */
+.search-toggle {
+    background: none;
+    border: none;
+    color: #00ffff;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    z-index: 3;
+    position: relative;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.search-toggle:hover {
+    color: #ff00ff;
+    transform: scale(1.1);
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    background: #0d0026;
+    padding: 1rem 0;
+    border: 1px solid #a020f0;
+    box-shadow: 0 0 10px rgba(160, 32, 240, 0.3);
+}
+
+.breadcrumbs a {
+    color: #e0e0e0;
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    color: #ff00ff;
+    text-shadow: 0 0 5px #ff00ff;
+}
+
+.breadcrumbs span {
+    color: #888;
+}
+
+/* Hero Slider */
+.hero-slider {
+    position: relative;
+    height: 60vh;
+    overflow: hidden;
+    border: 2px solid #ff00ff;
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0.7);
+    animation: heroPulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes heroPulse {
+    from { box-shadow: 0 0 25px rgba(255, 0, 255, 0.7); }
+    to { box-shadow: 0 0 35px rgba(255, 0, 255, 0.9); }
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    filter: brightness(0.9) contrast(1.1);
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slide-content {
+    position: absolute;
+    bottom: 20%;
+    left: 5%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid #ff00ff;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+}
+
+.slide-content h2 {
+    font-size: 2.5rem;
+    color: #ff00ff;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+}
+
+.slide-content p {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+}
+
+/* Main Content */
+.main-content {
+    padding: 3rem 0;
+    background-color: #1a0033;
+    border-radius: 8px;
+    border: 1px solid #ff00ff;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.main-content::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px;
+    right: -2px; bottom: -2px;
+    background: linear-gradient(45deg, #ff00ff, #00ffff, #ff0066);
+    z-index: -1;
+    filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.main-content:hover::before {
+    opacity: 1;
+    animation: rotateBorder 3s linear infinite;
+}
+
+@keyframes rotateBorder {
+    to {
+        background-position: 400% 0;
+    }
+}
+
+/* About Section */
+.about-section {
+    padding: 4rem 0;
+    background: #1a0033;
+    border: 1px solid #a020f0;
+    box-shadow: 0 0 15px rgba(160, 32, 240, 0.4);
+}
+
+.about-section h2 {
+    font-size: 2.5rem;
+    color: #ff00ff;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.about-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #e0e0e0;
+}
+
+/* Featured Section */
+.featured-section {
+    padding: 4rem 0;
+}
+
+.featured-section h2 {
+    font-size: 2.5rem;
+    color: #ff00ff;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.featured-item {
+    background: #1a0033;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #a020f0;
+    box-shadow: 0 0 15px rgba(160, 32, 240, 0.4);
+    position: relative;
+    cursor: pointer;
+}
+
+/* Modificaciones para el efecto hover en .featured-item */
+.featured-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.3);
+    border-color: #00ffff;
+}
+
+.featured-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border: 1px solid #ff00ff;
+    filter: saturate(1.1) brightness(1.05);
+    transition: filter 0.3s ease;
+}
+
+.featured-item:hover img {
+    filter: brightness(0.8) contrast(1.2);
+}
+
+
+.featured-item h3 {
+    color: #ff00ff;
+    font-size: 1.3rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 5px #ff00ff;
+}
+
+/* Mejorar legibilidad del título en hover en sección de destacados */
+.featured-item:hover h3 {
+    color: #00ffff;
+    text-shadow: 0 0 5px #00ffff, 0 0 15px rgba(0, 255, 255, 0.7);
+}
+
+.featured-item p {
+    color: #ccc;
+    padding: 0 1rem 1.5rem;
+}
+
+.featured-item .price {
+    display: block;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #00ffff;
+    margin-bottom: 20px;
+    text-shadow: 0 0 5px #00ffff, 0 0 10px rgba(0, 255, 255, 0.5);
+    transition: text-shadow 0.3s ease-in-out;
+}
+
+.featured-item:hover .price {
+    text-shadow: 0 0 8px #00ffff, 0 0 15px rgba(0, 255, 255, 0.7);
+}
+
+/* Gallery Styles */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.gallery-item {
+    background: #1a0033;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #ff00ff;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+    cursor: pointer;
+    position: relative;
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.3);
+    border-color: #00ffff;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-item h3 {
+    color: #00ffff;
+    font-size: 1.3rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.gallery-item p {
+    color: #ccc;
+    padding: 0 1rem 1.5rem;
+}
+
+/* --- ESTILOS DEL MODAL DE GALERÍA DE PANTALLA COMPLETA --- */
+#fullscreen-modal {
+    display: none; /* <-- ¡VUELVE A PONER display: none; AQUÍ! */
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    /* Estas propiedades flexbox son para cuando el modal se muestre, no para que lo muestre por defecto */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* Estilos para el botón de cerrar del modal */
+.modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 10001;
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilos para la imagen dentro del modal */
+.fullscreen-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+    border: 2px solid #ff00ff;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+}
+
+/* Estilos para la imagen dentro del modal */
+.fullscreen-image {
+    max-width: 90%; /* Máximo 90% del ancho del modal */
+    max-height: 90%; /* Máximo 90% del alto del modal */
+    object-fit: contain; /* Ajusta la imagen sin recortarla */
+    display: block; /* Para eliminar cualquier espacio extra si fuera inline */
+    margin: auto; /* Centra la imagen */
+    border: 2px solid #ff00ff; /* Borde neón */
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.8); /* Resplandor neón */
+}
+
+/* Videos Section - General containers */
+.video-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: #1a0033;
+    border-radius: 15px;
+    border: 1px solid #a020f0;
+    box-shadow: 0 0 15px rgba(160, 32, 240, 0.4);
+}
+
+.video-section h2 {
+    font-size: 2rem;
+    color: #00ffff;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 8px #00ffff;
+}
+
+/* Specific Video Container (for single videos and YouTube embeds) */
+.video-container {
+    /* Eliminamos las propiedades de posicionamiento */
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    background-color: #0d0026;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    margin-bottom: 0; /* Eliminamos el margen inferior para el info-box */
+}
+
+.video-container video,
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+}
+
+/* El nuevo estilo para el contenedor de la información del video */
+.video-info {
+    text-align: center;
+    margin-top: 1.5rem; /* Añadimos espacio entre el video y el título */
+    padding-top: 0.5rem;
+}
+
+.video-info h3 {
+    color: #ff00ff;
+    margin-bottom: 0.5rem;
+    font-size: 1.6rem;
+    /* Aseguramos que el título se vea bien */
+    position: static;
+    top: auto;
+    left: auto;
+    transform: none;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+.video-info p {
+    color: #ccc;
+    font-size: 1rem;
+}
+
+.video-info h3 {
+    color: #ff00ff;
+    margin-bottom: 0.5rem;
+    font-size: 1.6rem;
+}
+
+.video-info p {
+    color: #ccc;
+    font-size: 1rem;
+}
+
+/* Video Playlist Specific Styles */
+.playlist-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+
+.playlist-video {
+    background: #0d0026;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #a020f0;
+    box-shadow: 0 0 10px rgba(160, 32, 240, 0.3);
+    transition: all 0.3s ease;
+    flex: 1 1 calc(33% - 1.5rem);
+    max-width: calc(33% - 1.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.playlist-video.active {
+    border-color: #ff00ff;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+    transform: translateY(-5px);
+}
+
+.playlist-video video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-bottom: 1px solid #a020f0;
+}
+
+.playlist-video h4 {
+    color: #00ffff;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    text-align: center;
+    text-shadow: 0 0 5px #00ffff;
+    width: 100%;
+}
+
+.playlist-controls {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.control-btn {
+    background: linear-gradient(135deg, #00ffff, #00d4ff);
+    color: #0a001a;
+    border: none;
+    padding: 0.8rem 1.8rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+}
+
+.control-btn:hover {
+    background: linear-gradient(135deg, #ff00ff, #a020f0);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 0, 255, 0.6);
+}
+
+/* Additional Video Content Grid (More Videos) */
+.video-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.video-card {
+    background: #1a0033;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #ff00ff;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+    position: relative;
+    cursor: pointer;
+}
+
+.video-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.3);
+    border-color: #00ffff;
+}
+
+.video-thumbnail {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+}
+
+.video-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.9) contrast(1.1);
+    transition: filter 0.3s ease;
+}
+
+.video-card:hover .video-thumbnail img {
+    filter: brightness(0.8) contrast(1.2);
+}
+
+.play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: #00ffff;
+    font-size: 3rem;
+    padding: 1rem 1.5rem;
+    border-radius: 50%;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    border: 2px solid #00ffff;
+    text-shadow: 0 0 10px #00ffff;
+}
+
+.video-card:hover .play-overlay {
+    background: rgba(0, 255, 255, 0.8);
+    color: #1a0033;
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+}
+
+.video-card h3 {
+    color: #ff00ff;
+    font-size: 1.3rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 5px #ff00ff;
+}
+
+.video-card p {
+    color: #ccc;
+    padding: 0 1rem 1.5rem;
+}
+
+
+/* Contact and Register Forms */
+.form-section {
+    background-color: #1a0033;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem auto;
+    border: 1px solid #ff00ff; /* Color de vora rosa neó */
+    box-shadow: 0 0 15px 5px rgba(255, 0, 255, 0.4); /* Sombra neó per a la vora */
+}
+
+.form-section h2 {
+    font-size: 2.5rem;
+    color: #00ffff;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 8px #00ffff;
+}
+
+.contact-form, .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 2rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #00ffff;
+    font-weight: 500;
+    text-shadow: 0 0 5px #00ffff;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="date"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 1rem;
+    background: #0d0026;
+    border: 1px solid #a020f0;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%2300ffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.5em;
+    padding-right: 2.5rem;
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #ff00ff;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+.form-group .checkbox-label {
+    display: inline;
+    font-weight: normal;
+    text-shadow: none;
+}
+
+.form-group .checkbox-label a {
+    color: #00ffff;
+    text-decoration: none;
+}
+
+.form-group .checkbox-label a:hover {
+    text-decoration: underline;
+}
+.form-divider {
+    border: none;
+    border-top: 3px solid #e0e0e0;
+    margin: 2rem 0;
+    opacity: 0.2;
+}
+
+/*Botones de envio*/
+.submit-btn {
+    font-family: 'Electrolize', sans-serif;
+    background: #a020f0;
+    color: #fff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(160, 32, 240, 0.7);
+    margin-top: 1.5rem;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.submit-btn:hover {
+    background: #ff0066;
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(255, 0, 102, 0.9);
+}
+
+/* Aplicacion de estilo para otro botones */
+.form-btn {
+    font-family: 'Electrolize', sans-serif;
+    background: #a020f0;
+    color: #fff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(160, 32, 240, 0.7);
+}
+
+.form-btn:hover {
+    background: #ff0066;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 0, 102, 0.9);
+}
+
+
+.form-links {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.form-links p {
+    color: #e0e0e0;
+    margin-bottom: 0.5rem;
+}
+
+.form-links a {
+    color: #00ffff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.form-links a:hover {
+    text-decoration: underline;
+    text-shadow: 0 0 5px #00ffff;
+}
+
+/* Estilos para el pie de página */
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px; /* Asegura un ancho mínimo para que no se amontonen */
+    margin: 1rem;
+}
+
+.footer-section h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #ff00ff; /* Color rosa neón */
+}
+
+/* ======================
+   COOKIE NOTICE (Banner de Cookies)
+   ====================== */
+.cookie-notice {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(13, 0, 38, 0.95);
+    padding: 1rem 2rem;
+    border-top: 2px solid #a020f0;
+    box-shadow: 0 -5px 20px rgba(160, 32, 240, 0.3);
+    z-index: 9999;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+    backdrop-filter: blur(8px);
+}
+
+.cookie-notice.show {
+    transform: translateY(0);
+}
+
+.cookie-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+}
+
+.cookie-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#cookie-checkbox {
+    margin-right: 0.5rem;
+    accent-color: #ff00ff;
+}
+
+.cookie-btn {
+    background: linear-gradient(135deg, #a020f0, #ff00ff);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(160, 32, 240, 0.5);
+}
+
+.cookie-btn:disabled {
+    background: #555;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.cookie-btn:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 0, 255, 0.7);
+}
+
+/* --- Mensajes Flash (Alerts) --- */
+
+.alert {
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    max-width: 800px;
+    border: 1px solid transparent; /* Bordura per al color */
+    color: #fff; /* Color de text per defecte, que és blanc */
+    animation: fadeIn 0.5s ease-in-out;
+    opacity: 1; /* Assegurem que l'alerta sigui visible inicialment */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Transició per a la desaparició */
+}
+
+.alert p {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.alert.success {
+    background-color: #4CAF50; /* Verd */
+    border-color: #45a049;
+}
+
+.alert.error {
+    background-color: #f44336; /* Vermell */
+    border-color: #d32f2f;
+}
+
+/* Animació d'entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animació simple per a l'entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+
+/* Ajustes para pantallas de tablet y móvil (hasta 992px) */
+@media (max-width: 992px) {
+    .playlist-video {
+        flex: 1 1 calc(50% - 1.5rem);
+        max-width: calc(50% - 1.5rem);
+    }
+}
+
+/* Ajustes principales para pantallas de móvil (hasta 768px) */
+@media (max-width: 768px) {
+    /* --- HEADER Y NAVEGACIÓN --- */
+    .header-main {
+        flex-direction: row; /* Asegura que los elementos estén en fila */
+        flex-wrap: nowrap; /* Evita que los elementos salten de línea */
+        justify-content: space-between; /* Espacia logo a la izquierda y acciones/hamburguesa a la derecha */
+        align-items: center; /* Centra verticalmente los elementos */
+        padding: 10px 15px; /* Ajusta el padding para móviles */
+    }
+
+    .nav-brand {
+        flex-shrink: 1; /* Permite que el logo se encoja si es necesario */
+        min-width: 0;
+    }
+
+    .logo img {
+        max-width: 80px; /* Reduce el tamaño del logo para móviles */
+        height: auto;
+    }
+
+    .logo {
+        font-size: 1.3em; /* Ajusta el tamaño de fuente del texto del logo */
+    }
+
+    /* Ocultar el menú de navegación principal por defecto en móvil */
+    .nav-menu {
+        position: absolute;
+        top: 100%; /* Se posiciona justo debajo del header */
+        left: 0;
+        width: 100%;
+        max-height: 0; /* Oculto por defecto, se expandirá con JS */
+        overflow: hidden;
+        transition: max-height 0.4s ease-out;
+        flex-basis: 100%;
+        background: #0d0026; /* Fondo del menú desplegable */
+        box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
+        z-index: 999; /* Por debajo del modal de imágenes */
+        flex-direction: column; /* Asegura que los ítems del menú se apilen */
+        padding: 0; /* Elimina padding inicial para controlarlo con ul/li */
+    }
+
+    .nav-menu.mobile-active {
+        max-height: 300px; /* Altura máxima para mostrar el menú */
+        /* display: flex; No es necesario si ya está flex-direction: column; y max-height lo muestra */
+    }
+
+    .nav-menu ul {
+        flex-direction: column;
+        padding: 1rem 0;
+        gap: 0; /* Elimina el espacio entre los ítems */
+    }
+
+    .nav-menu li {
+        text-align: center;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador entre ítems */
+    }
+
+    .nav-menu li:last-child {
+        border-bottom: none; /* No hay borde en el último ítem */
+    }
+
+    .nav-menu a {
+        font-size: 1.2em;
+        display: block;
+        padding: 0.5rem 0;
+    }
+
+    /* Acciones del Header (Buscador y Login) y Toggle de Menú */
+    .header-actions {
+        display: flex; /* Muestra las acciones */
+        flex-direction: row; /* Las mantiene en línea */
+        align-items: center; /* Centra verticalmente */
+        gap: 0.8rem; /* Espacio entre el buscador y el botón de login/hamburguesa */
+        flex-shrink: 0;
+        z-index: 4; /* Asegura que estén por encima de otros elementos menores */
+    }
+
+    /* Mostrar botón de menú móvil */
+    .mobile-menu-toggle {
+        display: block; /* Asegura que el botón de hamburguesa se muestre */
+        /* Ya no necesita position: absolute si está en header-actions o directamente en header-main con flex */
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0; /* Elimina padding por defecto si lo tuviera */
+        line-height: 1; /* Asegura el tamaño del icono */
+        margin-left: 10px; /* Pequeño margen a la izquierda de la hamburguesa */
+    }
+
+    /* Estilos del buscador móvil */
+    .search-container {
+        position: relative; /* Asegura que el search-form se posicione respecto a este */
+        margin-right: 10px; /* Espacio entre el icono de búsqueda y el de login/hamburguesa */
+    }
+
+    /* Search Form en móvil */
+    .search-container.active .search-form {
+        width: 75vw; /* Ocupa el 90% del ancho del viewport */
+        left: 50%; /* Se posiciona al 50% del ancho desde la izquierda */
+        transform: translateX(-50%); /* Mueve el elemento hacia la izquierda el 50% de su propio ancho para centrarlo */
+        right: auto; /* Desactiva la propiedad right para evitar conflictos */
+        padding: 0.5rem 1rem;
+        z-index: 5;
+    }
+
+    .search-form {
+        width: 100%; /* Ocupa el 100% del contenedor en móvil */
+        justify-content: center;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    /* --- SLIDER HERO --- */
+    .hero-slider {
+        height: 40vh; /* Altura más compacta para móvil */
+    }
+
+    .slide-content {
+        bottom: 5%;
+        left: 5%;
+        right: 5%;
+        padding: 1rem;
+    }
+
+    .slide-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .slide-content p {
+        font-size: 1rem;
+    }
+
+    /* --- GALERÍA DE IMÁGENES (galeria.html) --- */
+    .gallery-grid {
+        grid-template-columns: 1fr; /* Una columna en móvil */
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* El modal de ampliación de imágenes (#fullscreen-modal)
+       ya es inherentemente responsivo debido a:
+       position: fixed; width: 100%; height: 100%;
+       justify-content: center; align-items: center;
+       y .fullscreen-image con max-width: 90%; max-height: 90%;
+       No necesita ajustes adicionales aquí. */
+
+    /* --- SECCIÓN DE VÍDEOS (videos.html) --- */
+    .video-player-container {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    #videoPlayer {
+        width: 100%;
+        height: auto;
+    }
+
+    #playlist {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .playlist-item {
+        margin-bottom: 10px;
+    }
+
+    .playlist-item video {
+        width: 100%;
+        height: auto;
+    }
+
+    /* --- FORMULARIOS (contacto.html, registre.html, login.html) --- */
+    .form-section {
+        margin: 20px;
+        padding: 2rem 1rem;
+    }
+
+    /* --- FOOTER --- */
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .contact-info-section {
+        padding: 1.5rem;
+    }
+
+    /* --- OTROS --- */
+    /* Este es el playlist-video de la media query de 992px, lo he subido allí.
+       Si aplica a 768px para una columna completa, ya está cubierto por el `gallery-grid` similar.
+       Dejándolo como 100% para móvil. */
+    .playlist-video {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    /* Cookie Notice - Si lo necesitas adaptar, puedes añadirlo aquí */
+    /* .cookie-notice { ... } */
+}
+
+/* Puedes añadir una Media Query para pantallas aún más pequeñas si es necesario */
+@media screen and (max-width: 480px) {
+    /* Ajustes específicos para teléfonos más pequeños si los 768px no son suficientes */
+    .logo img {
+        max-width: 70px; /* Un poco más pequeño para pantallas muy estrechas */
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.main-content > * {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #1a0033;
+    padding: 2rem;
+    border-radius: 15px;
+    border: 2px solid #ff00ff;
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.8);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #ff0066;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
