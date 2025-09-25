@@ -1,25 +1,25 @@
 <?php
-// registre.php
+// Inclusion de los archivos necesarios
 require 'template.php';
 
-// Cal iniciar la sessió abans d'utilitzar la classe per a que $_SESSION estigui disponible
+// Iniciar sesion para poder usar la clase Session
 session_start();
 
-// Llamamos a la cabecera
+// Imprimir la cabecera
 imprimir_cabecera('Registre - Gaming Zone');
 
 // -------------------------------------------------------------------------------------
-// Lógica para procesar el formulario de registro cuando se envía
+// Logica para procesar el formulario de registro
 // -------------------------------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recoger todos los datos del formulario, incluyendo los campos adicionales
+    // Recoger todos los datos del formulario
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm-password'];
     $accepts_terms = isset($_POST['accepts-terms']);
 
-    // Campos adicionales del formulario
+    // Campos adicionales
     $full_name = $_POST['full_name'];
     $birthdate = $_POST['birthdate'];
     $gender = $_POST['gender'];
@@ -27,16 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $country = $_POST['country'];
     $postal_code = $_POST['postal_code'];
 
-    // Validar que las contraseñas coincidan
+    // Validacion de contrasenas
     if ($password !== $confirm_password) {
         echo '<p class="error-message">Error: Las contraseñas no coinciden.</p>';
     } elseif (!$accepts_terms) {
-        // Validación para los términos y condiciones
+        // Validacion de los terminos y condiciones
         echo '<p class="error-message">Error: Debes aceptar los Términos y condiciones.</p>';
     } else {
-        // TODO: lògica de BBDD
-        // Aquí es donde iría la lógica de base de datos
-        // para insertar todos los datos del formulario.
+        // TODO: logica de base de datos para insertar los datos del usuario
     }
 }
 ?>
@@ -117,6 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <?php
-// Cridem a la funció per imprimir el peu de pàgina
+// Imprimir el pie de pagina
 imprimir_pie();
 ?>

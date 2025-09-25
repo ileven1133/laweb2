@@ -1,13 +1,15 @@
 <?php
+// Inclusion de los archivos necesarios
 require 'session_manager.php';
 require 'template.php';
 
-// Si l'usuari ja ha iniciat sessió, el redirigim a la pàgina d'inici
+// Redirigir si el usuario ya esta logeado
 if (Session::has('loggedin')) {
     header("Location: index.php");
     exit();
 }
 
+// Imprimir la cabecera
 imprimir_cabecera('Login - Gaming Zone');
 ?>
 <div class="breadcrumbs">
@@ -42,5 +44,6 @@ imprimir_cabecera('Login - Gaming Zone');
     </section>
 </div>
 <?php
+// Imprimir el pie de pagina
 imprimir_pie();
 ?>

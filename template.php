@@ -1,7 +1,8 @@
 <?php
-// template.php
+// Inclusion de la clase Session
 require_once 'Session.php';
 
+// Funcion para imprimir la cabecera de la pagina
 function imprimir_cabecera($titulo)
 {
     echo <<<HTML
@@ -42,15 +43,15 @@ function imprimir_cabecera($titulo)
 
                 <div class="nav-actions">
 HTML;
-    // Lògica per mostrar els enllaços segons l'estat de la sessió amb la classe Session
+    // Mostrar enlaces segun el estado de la sesion
     if (Session::has('loggedin')) {
-        // Usuari logejat
+        // Enlaces para usuario logeado
         echo '<span class="user-greeting">Hola, ' . htmlspecialchars(Session::get('username')) . '!</span>';
         echo '<a href="session_manager.php?action=logout" class="btn-icon" title="Tancar Sessió">';
         echo '<i class="fas fa-sign-out-alt"></i>';
         echo '</a>';
     } else {
-        // Usuari no logejat
+        // Enlaces para usuario no logeado
         echo '<a href="login.php" class="btn-icon" title="Login">';
         echo '<i class="fas fa-user-circle"></i>';
         echo '</a>';
@@ -64,7 +65,7 @@ HTML;
         </header>
         <main id="main-content">
 HTML;
-    // Mostrem els missatges flash
+    // Mostrar mensajes flash de exito o error
     if (Session::getFlash('success')) {
         echo '<div class="alert success">';
         echo '<p>Missatge enviat correctament</p>';
@@ -79,6 +80,7 @@ HTML;
 }
 }
 
+// Funcion para imprimir el pie de pagina
 function imprimir_pie()
 {
     echo <<<HTML

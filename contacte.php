@@ -1,60 +1,54 @@
 <?php
-// contacte.php
-
-// Incluimos los archivos necesarios
+// Inclusion de los archivos necesarios
 require_once 'template.php';
 require_once 'Session.php';
 require_once 'Email.php';
 
-// Iniciamos la sesión a cada página que la utilice
+// Iniciar la sesion
 session_start();
 
-// Lógica para procesar el envío del formulario
+// Procesar el formulario de contacto si se ha enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // 1. Recogemos las datos del formulario
+    // 1. Recoger los datos del formulario
     $name    = $_POST['name'] ?? null;
     $email   = $_POST['email'] ?? null;
     $subject = $_POST['subject'] ?? null;
     $message = $_POST['message'] ?? null;
 
-    // 2. Validamos los datos
+    // 2. Validar que los campos no esten vacios
     if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
         
-        // Dirección de correo donde recibirás el mensaje
+        // Direccion de correo del destinatario
         $recipient_email = 'feros62279@anysilo.com';
 
         try {
-            // 3. Creamos una instancia de la clase Email
+            // 3. Crear una instancia de la clase Email
             $emailSender = new Email(
                 $recipient_email,
                 $subject,
                 $message,
-                $email, // La dirección del usuario que envía el mensaje
-                $name  // El nombre del usuario que envía el mensaje
+                $email,
+                $name
             );
 
-            // 4. Enviamos el email
+            // 4. Enviar el email
             $emailSender->send();
             
-            // 5. Mensaje de confirmación
+            // 5. Mostrar un mensaje de confirmacion
             Session::success('El teu missatge ha estat enviat correctament. Gràcies per contactar amb nosaltres!');
             
-            // 🚨 ¡ATENCIÓ! Hemos eliminado la redirección 'header()' aquí.
-            // Si rediriges, el mensaje flash no se mostrará en la página actual.
-            // La ejecución continuará y la página se cargará con el mensaje.
-
         } catch (Exception $e) {
-            // Si hay un error al enviar el email, guardamos el mensaje de error.
+            // Manejar errores si el email no se puede enviar
             Session::error('Hi ha hagut un error en enviar el missatge. Si us plau, torna-ho a intentar més tard.');
         }
 
     } else {
-        // Si no se llenaron todos los campos, guardamos un mensaje de error.
+        // Mostrar un mensaje de error si faltan campos por rellenar
         Session::error('Si us plau, omple tots els camps del formulari.');
     }
 }
 
-// Imprimimos la cabecera de la página
+// Imprimir la cabecera de la pagina
 imprimir_cabecera('Contacte - Gaming Zone');
 ?>
 <div class="breadcrumbs">
@@ -86,6 +80,6 @@ imprimir_cabecera('Contacte - Gaming Zone');
     </section>
 </div>
 <?php
-// Imprimimos el pie de página
+// Imprimir el pie de pagina
 imprimir_pie();
 ?>

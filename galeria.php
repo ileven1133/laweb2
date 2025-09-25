@@ -1,44 +1,31 @@
 <?php
 
-// Incloem les classes necessàries
+// Incluir las clases necesarias
 require_once 'template.php';
 require_once 'FileList.php';
 require_once 'File.php';
 require_once 'Upload.php';
 require_once 'UploadException.php';
 
-// Cal iniciar la sessió abans d'utilitzar la classe per a que $_SESSION estigui disponible
+// Iniciar la sesion
 session_start();
 
-// Definir la carpeta on es guarden les imatges de la galeria
+// Directorio para guardar las imagenes
 $directori_imatges = 'imatges';
 
-// Definir un estat de sessió simple per a la demostració
-// NOTA: Aquest codi ja no és necessari si utilitzem la classe Session.
-// Se substituirà per la comprovació de sessió.
-// $usuari_identificat = true;
-
-// Inicialitzar missatges per a la pujada de fitxers
+// Inicializar mensajes para la subida de archivos
 $missatge_ok = '';
 $missatge_error = '';
 
-// Funció per a registrar errors en el fitxer 'error.log'
+// Funcion para registrar errores en un archivo de log
 function registrar_error_log($missatge) {
-    // Obtenim la data i hora actuals en el format "YYYY-MM-DD HH:MM:SS"
     $data_actual = date('Y-m-d H:i:s');
-    
-    // Creem la línia de log amb la data i el missatge d'error
     $linia_log = $data_actual . " - " . $missatge . "\n";
-    
-    // Escrivim la línia de log al fitxer 'error.log'
-    // El flag FILE_APPEND assegura que el nou contingut s'afegeixi al final
-    // LOCK_EX prevé que altres processos puguin escriure al mateix temps
     file_put_contents('error.log', $linia_log, FILE_APPEND | LOCK_EX);
 }
 
-// Comprovar si s'ha enviat el formulari de pujada
+// Procesar la subida del formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Aquí el codi que ya tenías y que es correcto
     if (!isset($_FILES['nova_imatge']) || $_FILES['nova_imatge']['error'] === UPLOAD_ERR_NO_FILE) {
         $missatge_error = "No s'ha seleccionat cap fitxer per pujar.";
         registrar_error_log("No s'ha seleccionat cap fitxer per pujar.");
@@ -48,30 +35,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         registrar_error_log("Ha ocorregut un error en la pujada amb codi: " . $error_code);
     } else {
         try {
-            // Processar la pujada del fitxer dins del bloc 'try'
-            // NOTA: La classe Upload té mètodes estatics, no es crea una instància.
-            // L'únic mètode que s'utilitza per pujar fitxers és el mètode 'save()'.
-            
-            // Utilitzem el mètode estatic save() de la classe Upload
+            // Intentar subir la imagen usando la clase Upload
             Upload::save(
-                'nova_imatge',          // La clau de l'input de fitxers
-                $directori_imatges,     // La carpeta de destí
-                true,                   // Generar nom únic
-                2000000,                // Mida màxima del fitxer (2 MB)
-                'image/*'               // Tipus MIME permesos
+                'nova_imatge',
+                $directori_imatges,
+                true,
+                2000000,
+                'image/*'
             );
             
             $missatge_ok = "La imatge s'ha pujat correctament!";
         } catch (UploadException $e) {
-            // Capturar la excepció si la pujada falla
+            // Capturar y registrar la excepcion si la subida falla
             $missatge_error = "Error en la pujada: " . $e->getMessage();
-            // Registrem l'error amb el missatge de l'excepció
             registrar_error_log("Error en la pujada: " . $e->getMessage());
         }
     }
 }
 
-// Cridem a la funció per imprimir la capçalera
+// Imprimir la cabecera
 imprimir_cabecera('Galeria - Gaming Zone');
 
 ?>
@@ -88,7 +70,7 @@ imprimir_cabecera('Galeria - Gaming Zone');
         <p>Explora la nostra col·lecció de setups, ordinadors i components gaming d'alta gamma.</p>
 
         <?php 
-            // Comprovem si l'usuari està identificat utilitzant la classe Session
+            // Mostrar el formulario de subida solo si el usuario esta logeado
             if (Session::has('loggedin')) { 
         ?>
             <section class="upload-section">
@@ -108,13 +90,13 @@ imprimir_cabecera('Galeria - Gaming Zone');
                 </form>
             </section>
         <?php 
-            } // Tanca el bloc 'if'
+            }
         ?>
 
         <section class="gallery-section">
             <div class="gallery-grid">
                 <?php
-                // Llista els fitxers del directori d'imatges
+                // Listar las imagenes del directorio
                 $fitxers = FileList::files($directori_imatges, ['jpg', 'jpeg', 'png', 'gif']);
                 foreach ($fitxers as $fitxer) {
                     $path_complet = $fitxer->getPath();
@@ -148,6 +130,6 @@ imprimir_cabecera('Galeria - Gaming Zone');
     </div>
 </main>
 <?php
-// Cridem a la funció per imprimir el peu de pàgina
+// Imprimir el pie de pagina
 imprimir_pie();
 ?>

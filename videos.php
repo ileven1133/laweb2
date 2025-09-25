@@ -1,12 +1,12 @@
 <?php
 
-// Incluimos la plantilla
+// Inclusion de la plantilla
 require_once 'template.php';
 
-// Cal iniciar la sessió abans d'utilitzar la classe per a que $_SESSION estigui disponible
+// Iniciar la sesion
 session_start();
 
-// Llamamos a la función para imprimir la cabecera
+// Imprimir la cabecera
 imprimir_cabecera('Vídeos - Gaming Zone');
 
 ?>
@@ -121,7 +121,7 @@ imprimir_cabecera('Vídeos - Gaming Zone');
 
 <?php
 
-// Llamamos a la función para imprimir el pie de página
+// Imprimir el pie de pagina
 imprimir_pie();
 
 ?>

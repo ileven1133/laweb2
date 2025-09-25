@@ -1,12 +1,12 @@
 <?php
 
-// Incloem el fitxer de la plantilla per poder utilitzar les seves funcions
+// Inclusion de la plantilla
 require_once 'template.php';
 
-// Cal iniciar la sessió abans d'utilitzar la classe per a que $_SESSION estigui disponible
+// Iniciar sesion
 session_start();
 
-// Cridem a la funció per imprimir la capçalera, passant el títol de la pàgina
+// Imprimir la cabecera con el titulo de la pagina
 imprimir_cabecera('Gaming Zone - Els millors ordinadors gaming');
 
 ?>
@@ -70,7 +70,7 @@ imprimir_cabecera('Gaming Zone - Els millors ordinadors gaming');
 
 <?php
 
-// Cridem a la funció per imprimir el peu de pàgina
+// Imprimir el pie de pagina
 imprimir_pie();
 
 ?>
